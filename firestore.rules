@@ -1,0 +1,29 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // ---- EDITAR: el correo de la ÚNICA cuenta de Secretaría (en minúscula) ----
+    function esSecretaria() {
+      return request.auth != null
+        && request.auth.token.email != null
+        && request.auth.token.email.lower() == 'prosecretario@tu-escuela.edu.ar';
+    }
+    // ---------------------------------------------------------------------------
+
+    // Cualquier persona que entra con el link (ingreso anónimo) o Secretaría
+    function conLink() { return request.auth != null; }
+
+    // Aquí Secretaría guarda el código secreto del link de los preceptores
+    match /admin/{doc} { allow read, write: if esSecretaria(); }
+
+    // Datos del colegio. {codigo} es el código secreto que va dentro del link:
+    // sin conocerlo no se puede leer ni escribir nada.
+    match /esc/{codigo}/est/{id}  { allow read, write: if conLink(); }
+    match /esc/{codigo}/tomb/{id} { allow read, write: if conLink(); }
+    // Preceptores y cursos: todos leen, solo Secretaría escribe
+    match /esc/{codigo}/cfg/{id}  { allow read: if conLink(); allow write: if esSecretaria(); }
+
+    // Todo lo demás, cerrado
+    match /{document=**} { allow read, write: if false; }
+  }
+}
