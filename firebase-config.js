@@ -12,20 +12,20 @@
 // ============================================================
 window.APP_CONFIG = {
   firebase: {
-    apiKey: "PEGAR_AQUI_apiKey",
-    authDomain: "PEGAR_AQUI.firebaseapp.com",
-    projectId: "PEGAR_AQUI_projectId",
-    storageBucket: "PEGAR_AQUI.appspot.com",
-    messagingSenderId: "PEGAR_AQUI",
-    appId: "PEGAR_AQUI_appId"
+    apiKey: "AIzaSyALqHtgmWLYYmrRY4drbJRV6FecAOmGVpE",
+    authDomain: "relevamiento-com-36.firebaseapp.com",
+    projectId: "relevamiento-com-36",
+    storageBucket: "relevamiento-com-36.firebasestorage.app",
+    messagingSenderId: "995048627386",
+    appId: "1:995048627386:web:6b839b52ebfb69efc2b683"
   },
   secretaria: [
-    "prosecretario@tu-escuela.edu.ar"
+    "relevamientocomercial36@protonmail.com"
   ],
   // OPCIONAL: planilla de Google. Cuando Secretaría carga un alumno nuevo,
   // se agrega también como fila en la planilla (ver README.md).
   // Dejalo así si todavía no lo configuraste.
   sheet: {
-    url: "PEGAR_AQUI_la_URL_de_la_aplicacion_web_de_Apps_Script"
+    url: "https://comercial36.github.io/relevamiento/"
   }
 };
