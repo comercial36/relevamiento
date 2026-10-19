@@ -26,6 +26,13 @@ body.vp .sec-only{display:none!important}
 .stk tbody tr:nth-child(even) td{background:#f3f4f6;background:color-mix(in srgb,var(--z,#e5e7eb) 45%,#fff)}
 @media(max-width:640px){.stk th:nth-child(-n+3),.stk td:nth-child(-n+3){position:static;box-shadow:none}.stk th:nth-child(1),.stk td:nth-child(1){width:auto;min-width:36px;max-width:none}.stk th:nth-child(2),.stk td:nth-child(2){width:auto;min-width:80px;max-width:none}.stk th:nth-child(3),.stk td:nth-child(3){min-width:140px}}
 .stk tbody tr:hover td{background:#e5e7eb;background:color-mix(in srgb,var(--z,#e5e7eb) 85%,#fff)}
+/* Acciones siempre visible a la derecha + encabezado fijo al hacer scroll vertical */
+.stk thead th{position:sticky!important;top:0;background:var(--z,#f3f4f6)}
+.act-sticky td:last-child{position:sticky;right:0;z-index:1;background:#fff;box-shadow:-2px 0 0 #e5e7eb}
+.act-sticky th:last-child{position:sticky;right:0;z-index:3;box-shadow:-2px 0 0 #e5e7eb}
+.act-sticky:not(.stk) th:last-child{background:#f3f4f6}
+.act-sticky td[colspan]{position:static;box-shadow:none}
+@media(max-width:640px){.act-sticky th:last-child,.act-sticky td:last-child{position:static;right:auto;box-shadow:none}}
 </style>
 </head>
 <body class="bg-gray-100 min-h-screen text-gray-800 flex flex-col">
@@ -164,8 +171,8 @@ body.vp .sec-only{display:none!important}
     </div>
    </div>
    <div class="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden">
-    <div class="overflow-x-auto max-h-[520px]">
-     <table class="w-full text-left border-collapse text-xs">
+    <div class="overflow-auto max-h-[70vh]">
+     <table class="act-sticky w-full text-left border-collapse text-xs">
       <thead class="bg-gray-100 sticky top-0 border-b"><tr>
        <th class="p-2.5">Legajo</th><th class="p-2.5">Alumno</th><th class="p-2.5">Fecha Nac. (Edad al 30/6)</th><th class="p-2.5">Sexo</th><th class="p-2.5">Curso</th><th class="p-2.5 text-center">Repit.</th><th class="p-2.5 text-center">Discap.</th><th class="p-2.5 text-right">Acciones</th>
       </tr></thead>
@@ -505,7 +512,7 @@ function renderCurso(c){
     </div>
    </div>
    <div class="p-4 flex flex-wrap gap-2 border-b">${chip('Total',list.length)}${chip('Varones',v)}${chip('Mujeres',m)}${chip('X',x)}${chip('Repitientes',rep)}${chip('Discapacidad',dis)}${is4?chip('Titularizaron',tit.filter(s=>s.titulariza==='si').length)+chip('No titularizaron',tit.filter(s=>s.titulariza==='no').length):''}</div>
-   <div class="overflow-x-auto"><table class="stk w-full text-left text-xs border-collapse" style="--z:${soft}">
+   <div class="overflow-auto max-h-[70vh]"><table class="stk act-sticky w-full text-left text-xs border-collapse" style="--z:${soft}">
     <thead><tr style="background:${soft};color:${col}" class="font-semibold"><th class="p-2.5 w-10">N°</th><th class="p-2.5">Legajo</th><th class="p-2.5">Apellido y Nombre</th><th class="p-2.5">DNI</th><th class="p-2.5">Fecha Nac.</th><th class="p-2.5 text-center">Edad</th><th class="p-2.5">Sexo</th><th class="p-2.5">Nacionalidad</th><th class="p-2.5">Domicilio</th><th class="p-2.5">Tel. alumno</th><th class="p-2.5">Email alumno</th><th class="p-2.5">Adulto responsable</th><th class="p-2.5">Tel. responsable</th><th class="p-2.5">Email responsable</th><th class="p-2.5 text-center">Repit.</th><th class="p-2.5 text-center">Discap.</th><th class="p-2.5">Trayectoria ${YEAR-1}</th><th class="p-2.5">Ciclo ${YEAR+1}</th><th class="p-2.5 text-right">Acciones</th></tr></thead>
     <tbody class="divide-y divide-gray-100">${list.length ? list.map((s,i)=>`<tr class="hover:bg-gray-50">
      <td class="p-2.5 font-bold" style="color:${col}">${i+1}</td>${legCell(s)}<td class="p-2.5 font-medium">${esc(s.nombre)}</td><td class="p-2.5 text-gray-600">${esc(s.dni)||'S/N'}</td>
