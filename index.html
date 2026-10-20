@@ -1109,7 +1109,12 @@ async function sendPending(){
     saveStateToStorage(); renderAll();
     showToast('Planilla: ' + added + ' cargado(s)' + (existed ? ', ' + existed + ' ya estaba(n)' : ''));
   }catch(e){
-    showToast('No se pudo confirmar el env\u00edo a la planilla. Qued\u00f3 pendiente y se reintenta.');
+    const m = String((e && e.message) || e || '');
+    const why = /Failed to fetch|NetworkError|Load failed/i.test(m) ? 'no se pudo conectar con la planilla: revis\u00e1 la URL y que la implementaci\u00f3n sea para "Cualquier persona"'
+      : /Unexpected token|JSON/i.test(m) ? 'la URL no responde como aplicaci\u00f3n web (revis\u00e1 que termine en /exec y el acceso "Cualquier persona")'
+      : m;
+    console.warn('Planilla:', e);
+    showToast('Planilla: ' + why + '. Qued\u00f3 pendiente.');
   }finally{ sheetBusy = false; updateSheetBtn(); }
 }
 
